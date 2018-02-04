@@ -1,0 +1,34 @@
+{
+  "name": "laravel-gentelella",
+  "description": "The Laravel 5.4 framework with Gentelella template",
+  "keywords": [
+    "framework",
+    "laravel",
+    "laravel 5.4",
+    "gentelella",
+    "laravel-gentelella",
+    "template",
+    "bootstrap",
+    "responsive",
+    "admin",
+    "php",
+    "html",
+    "css"
+  ],
+  "main": "",
+  "authors": [
+    "FlorientR"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/FlorientR/laravel-gentelella",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "gentelella": "^1.4.0"
+  }
+}
