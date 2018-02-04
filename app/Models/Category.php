@@ -1,7 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 class Category extends Model
 {
+    public function account(){
+        return $this->hasMany(Account::class);
+    }
+
+    public function profits(){
+        return $this->hasMany(Profit::class);
+    }
+
+    public function expenses(){
+        return $this->hasMany(Expense::class);
+    }
 }
