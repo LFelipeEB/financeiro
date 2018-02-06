@@ -29,6 +29,12 @@ elixir(function(mix) {
     // Gentelella
     mix.copy('vendor/bower_components/gentelella/build/css/custom.min.css', 'public/css/gentelella.min.css');
 
+    //Select2
+    mix.copy('vendor/bower_components/select2/dist/css/select2.min.css', 'public/css/select2.min.css');
+
+    //DataTable
+    mix.copy('vendor/bower_components/datatables.net-dt/css/jquery.dataTables.min.css', 'public/css/dataTable.min.css');
+
     /****************/
     /* Copy Scripts */
     /****************/
@@ -41,6 +47,16 @@ elixir(function(mix) {
 
     // Gentelella
     mix.copy('vendor/bower_components/gentelella/build/js/custom.min.js', 'public/js/gentelella.min.js');
+
+    //Select2
+    mix.copy('vendor/bower_components/select2/dist/js/select2.min.js', 'public/js/select2.min.js');
+
+    //DataTable
+    mix.copy('vendor/bower_components/datatables.net/js/jquery.dataTables.min.js', 'public/js/dataTable.min.js');
+
+    //Chart.JS
+    mix.copy('vendor/bower_components/chart.js/dist/Chart.bundle.min.js', 'public/js/chart.bundle.min.js');
+    mix.copy('vendor/bower_components/chart.js/dist/Chart.min.js', 'public/js/chart.min.js');
 
     /**************/
     /* Copy Fonts */

@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Expense extends Model
 {
+    protected $fillable = [
+        'category_id', 'account_id', 'user_id', 'value', 'receipt', 'place', 'description'
+    ];
+
     public function category(){
         return $this->belongsTo(Category::class);
     }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Profit;
+use App\Models\Profit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfitController extends Controller
 {
@@ -14,7 +15,7 @@ class ProfitController extends Controller
      */
     public function index()
     {
-        //
+        return view('profit.index');
     }
 
     /**
@@ -24,7 +25,7 @@ class ProfitController extends Controller
      */
     public function create()
     {
-        //
+        return view('profit.create');
     }
 
     /**
@@ -35,13 +36,23 @@ class ProfitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Profit::create([
+            'category_id' => $request->category_id,
+            'account_id' => $request->account_id,
+            'user_id' => Auth::id(),
+            'value' => $request->value,
+            'receipt' => $request->receipt,
+            'source' => $request->source,
+            'description' => $request->description
+        ]);
+
+        return redirect('/profit');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Profit  $profit
+     * @param  \App\Models\Profit  $profit
      * @return \Illuminate\Http\Response
      */
     public function show(Profit $profit)
@@ -52,34 +63,43 @@ class ProfitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Profit  $profit
+     * @param  \App\Models\Profit  $profit
      * @return \Illuminate\Http\Response
      */
     public function edit(Profit $profit)
     {
-        //
+        return view('profit.edit', compact('profit'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profit  $profit
+     * @param  \App\Models\Profit  $profit
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Profit $profit)
     {
-        //
+        $profit->category_id = $request->category_id;
+        $profit->account_id = $request->account_id;
+        $profit->value = $request->value;
+        $profit->receipt = $request->receipt;
+        $profit->source = $request->source;
+        $profit->description = $request->description;
+        $profit->save();
+
+        return redirect("/profit");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Profit  $profit
+     * @param  \App\Models\Profit  $profit
      * @return \Illuminate\Http\Response
      */
     public function destroy(Profit $profit)
     {
-        //
+        $profit->delete();
+        return redirect('/profit');
     }
 }

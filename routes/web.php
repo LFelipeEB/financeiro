@@ -18,3 +18,11 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+include_once 'user/web.php';
+include_once 'account/web.php';
+include_once 'creditcard/web.php';
+include_once 'application/web.php';
+include_once 'profit/web.php';
+include_once 'expense/web.php';
+include_once 'category/web.php';

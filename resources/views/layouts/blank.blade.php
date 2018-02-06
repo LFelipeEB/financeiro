@@ -13,7 +13,7 @@
 
         <!-- Bootstrap -->
         <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
-        <!-- Font Awesome -->
+        <!-- Font Awesome
         <link href="{{ asset("css/font-awesome.min.css") }}" rel="stylesheet">
         <!-- Custom Theme Style -->
         <link href="{{ asset("css/gentelella.min.css") }}" rel="stylesheet">
@@ -22,7 +22,7 @@
 
     </head>
 
-    <body class="nav-md footer_fixed">
+    <body class="nav-md">
         <div class="container body">
             <div class="main_container">
 
@@ -43,6 +43,8 @@
         <script src="{{ asset("js/bootstrap.min.js") }}"></script>
         <!-- Custom Theme Scripts -->
         <script src="{{ asset("js/gentelella.min.js") }}"></script>
+
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
         @stack('scripts')
 

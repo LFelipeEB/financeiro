@@ -2,11 +2,6 @@
 
 namespace App\Models;
 
-use App\Account;
-use App\Application;
-use App\CreditCard;
-use App\Expense;
-use App\Profit;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -16,6 +11,7 @@ class User extends Authenticatable
 {
 	use Notifiable;
 	use HasRoles;
+	use SoftDeletes;
 	
     /**
      * The attributes that are mass assignable.
@@ -55,5 +51,9 @@ class User extends Authenticatable
 
     public function creditCard(){
         return $this->hasMany(CreditCard::class);
+    }
+
+    public function log(){
+        return $this->hasMany(Log::class);
     }
 }

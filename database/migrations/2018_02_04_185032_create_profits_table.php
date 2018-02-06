@@ -15,13 +15,13 @@ class CreateProfitsTable extends Migration
     {
         Schema::create('profits', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('categorie_id');
-            $table->integer('conta_id');
+            $table->integer('category_id');
+            $table->integer('account_id');
             $table->integer('user_id');
             $table->integer('value');
             $table->string('receipt')->nullable();
             $table->string('source')->nullable();
-            $table->text('descripton')->nullable();
+            $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

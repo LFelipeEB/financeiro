@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-
 class Profit extends Model
 {
+    protected $fillable = [
+        'category_id', 'account_id', 'user_id', 'value', 'receipt', 'source', 'description'
+    ];
+
     public function category(){
         return $this->belongsTo(Category::class);
     }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Expense;
+use App\Models\Expense;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {
@@ -14,7 +15,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        //
+        return view("expense.index");
     }
 
     /**
@@ -24,7 +25,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        //
+        return view('expense.create');
     }
 
     /**
@@ -35,13 +36,23 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Expense::create([
+            'category_id' => $request->category_id,
+            'account_id' => $request->account_id,
+            'user_id' => Auth::id(),
+            'value' => $request->value,
+            'receipt' => $request->receipt,
+            'place' => $request->place,
+            'description' => $request->description
+        ]);
+
+        return redirect('/expense');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Expense  $expense
+     * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
     public function show(Expense $expense)
@@ -52,34 +63,44 @@ class ExpenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Expense  $expense
+     * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
     public function edit(Expense $expense)
     {
-        //
+        return view('expense.edit', compact('expense'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Expense  $expense
+     * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Expense $expense)
     {
-        //
+        $expense->category_id = $request->category_id;
+        $expense->account_id = $request->account_id;
+        $expense->value = $request->value;
+        $expense->receipt = $request->receipt;
+        $expense->place = $request->place;
+        $expense->description =  $request->description;
+        $expense->save();
+
+        return redirect("/expense");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Expense  $expense
+     * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
     public function destroy(Expense $expense)
     {
-        //
+        $expense->delete();
+
+        return redirect('/expense');
     }
 }

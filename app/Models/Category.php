@@ -4,6 +4,10 @@ namespace App\Models;
 
 class Category extends Model
 {
+    protected $fillable = [
+      'name'
+    ];
+
     public function account(){
         return $this->hasMany(Account::class);
     }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\CreditCard;
+use App\Models\CreditCard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 
 class CreditCardController extends Controller
 {
@@ -14,7 +16,7 @@ class CreditCardController extends Controller
      */
     public function index()
     {
-        //
+        return view('creditcard.index');
     }
 
     /**
@@ -24,7 +26,7 @@ class CreditCardController extends Controller
      */
     public function create()
     {
-        //
+        return view('creditcard.create');
     }
 
     /**
@@ -35,13 +37,23 @@ class CreditCardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        CreditCard::create([
+            'account_id' => $request->account_id,
+            'user_id' => Auth::id(),
+            'good_true' => $request->good_true,
+            'printed_name' => $request->printed_name,
+            'nickname' => $request->nickname,
+            'number' => $request->number,
+            'brand' => $request->brand
+        ]);
+
+        return redirect('/creditcard');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\CreditCard  $creditCard
+     * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
     public function show(CreditCard $creditCard)
@@ -52,19 +64,19 @@ class CreditCardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CreditCard  $creditCard
+     * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
     public function edit(CreditCard $creditCard)
     {
-        //
+        return view('creditcard.edit', compact('creditCard'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CreditCard  $creditCard
+     * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CreditCard $creditCard)
@@ -75,11 +87,12 @@ class CreditCardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CreditCard  $creditCard
+     * @param  \App\Models\CreditCard  $creditCard
      * @return \Illuminate\Http\Response
      */
     public function destroy(CreditCard $creditCard)
     {
-        //
+        $creditCard->delete();
+        return redirect('/creditcard');
     }
 }

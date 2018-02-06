@@ -15,8 +15,8 @@ class CreateExpensesTable extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('categorie_id');
-            $table->integer('conta_id');
+            $table->integer('category_id');
+            $table->integer('account_id');
             $table->integer('user_id');
             $table->integer('value');
             $table->string('receipt')->nullable();

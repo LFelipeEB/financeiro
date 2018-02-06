@@ -16,11 +16,12 @@ class CreateCreditCardsTable extends Migration
         Schema::create('credit_cards', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('account_id');
-            $table->integer('cpf_id');
+            $table->integer('user_id');
             $table->integer('good_true');
             $table->string('printed_name');
             $table->string('nickname')->nullable();
             $table->string('number');
+            $table->string('brand');
             $table->softDeletes();
             $table->timestamps();
         });

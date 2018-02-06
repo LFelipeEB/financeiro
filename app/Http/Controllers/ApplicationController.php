@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Application;
+use App\Models\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -14,7 +15,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        //
+        return view('application.index');
     }
 
     /**
@@ -24,7 +25,7 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        //
+        return view('application.create');
     }
 
     /**
@@ -35,13 +36,21 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Application::create([
+            'user_id' => Auth::id(),
+            'value' => $request->value,
+            'expected' => $request->expected,
+            'type' => $request->type,
+            'description' => $request->description,
+        ]);
+
+        return redirect("/application");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Application  $application
+     * @param  \App\Models\Application  $application
      * @return \Illuminate\Http\Response
      */
     public function show(Application $application)
@@ -52,34 +61,40 @@ class ApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Application  $application
+     * @param  \App\Models\Application  $application
      * @return \Illuminate\Http\Response
      */
     public function edit(Application $application)
     {
-        //
+        return view('application.edit', compact('application'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Application  $application
+     * @param  \App\Models\Application  $application
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Application $application)
     {
-        //
+        $application->value = $request->value;
+        $application->expected = $request->expected;
+        $application->type = $request->type;
+        $application->description = $request->description;
+        $application->save();
+        return redirect('/application');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Application  $application
+     * @param  \App\Models\Application  $application
      * @return \Illuminate\Http\Response
      */
     public function destroy(Application $application)
     {
-        //
+        $application->delete();
+        return redirect('/application');
     }
 }
