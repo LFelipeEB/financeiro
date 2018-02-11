@@ -2,10 +2,17 @@
     $expense30days = DB::table('expense30days')->where('user_id', Auth::id())->get();
 @endphp
 <input id="values_expense" value="{{$expense30days}}" type="hidden">
+
 @php
     $profit30days = DB::table('profit30days')->where('user_id', Auth::id())->get();
 @endphp
 <input id="values_profit" value="{{$profit30days}}" type="hidden">
+
+@php
+    $balance_account = DB::table('balance_account')->where('user_id', Auth::id())->get();
+@endphp
+<input id="values_balance_account" value="{{$balance_account}}" type="hidden">
+
 
 @push('scripts')
     <script src="{{ asset("js/chart.bundle.min.js") }}"></script>
@@ -19,6 +26,13 @@
             dataExpense.push(v.day);
             labelExpense.push(v.value);
         });
+        var valuesProfit = JSON.parse($('#values_profit').val());
+        var dataProfit=[], labelProfit=[];
+        valuesProfit.forEach(function (v) {
+            dataProfit.push(v.day);
+            labelProfit.push(v.value);
+        });
+
         var chartExpense = new Chart(expense, {
             type: 'line',
             data: {
@@ -27,7 +41,13 @@
                     label: 'Gastos em Reais',
                     data: labelExpense,
                     backgroundColor: 'rgba(255, 0, 0, 0.4)',
-                }]
+                },
+                    {
+                        label: 'Receitas em Reais',
+                        data: labelProfit,
+                        backgroundColor: 'rgba(0, 0, 255, 0.4)',
+                    }
+               ]
             },
             options: {
                 responsive: true,
@@ -42,25 +62,40 @@
             }
         });
 
+        var randomColorGenerator = function () {
+            return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+        };
 
-        var valuesProfit = JSON.parse($('#values_profit').val());
-        var dataProfit=[], labelProfit=[];
-        valuesProfit.forEach(function (v) {
-            dataProfit.push(v.day);
-            labelProfit.push(v.value);
+        var balance_account = JSON.parse($('#values_balance_account').val());
+        console.log(balance_account);
+        var dataBalance=[], labelBalance=[], colorBalance=[];
+        balance_account.forEach(function (v) {
+            labelBalance.push(v.name);
+            dataBalance.push(v.value);
+            colorBalance.push(randomColorGenerator())
         });
-        var profit = document.getElementById("chart_profits").getContext('2d');
-        var chartProfit = new Chart(profit, {
-            type: 'bar',
+
+        console.log(labelBalance);
+        console.log(dataBalance);
+        var balance = document.getElementById("chart_balance_account").getContext('2d');
+        var chartBalance = new Chart(balance, {
+            type: 'pie',
             data: {
-                labels: dataProfit,
-                datasets: [{
-                    label: 'Receitas em Reais',
-                    data: labelProfit,
-                    backgroundColor: 'rgba(0, 0, 255, 0.4)',
-                }]
+                datasets:[{
+                    data: dataBalance,
+                    backgroundColor: colorBalance
+                }],
+                labels: labelBalance,
+            },
+            options:{
+                responsive: true,
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                },
             }
         });
+
     </script>
 
 @endpush

@@ -15,11 +15,12 @@ class CreateProfitView extends Migration
     {
         DB::statement("
             create view profit30days as
-              SELECT (profits.value / 100) AS value,
+              SELECT SUM( (profits.value/100) ) AS value,
                 date_part('DAY'::text, profits.created_at) AS day,
                 profits.user_id
                FROM profits
-              WHERE (profits.created_at >= (CURRENT_DATE - '30 days'::interval day));
+              WHERE (profits.created_at >= (CURRENT_DATE - '30 days'::interval day))
+              GROUP BY user_id, day;
         ");
     }
 
@@ -30,6 +31,6 @@ class CreateProfitView extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('profit30days');
     }
 }
