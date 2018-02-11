@@ -16,8 +16,8 @@
         var valuesExpenses = JSON.parse($('#values_expense').val());
         var dataExpense=[], labelExpense=[];
         valuesExpenses.forEach(function (v) {
-            dataExpense.push(v.value);
-            labelExpense.push(v.day);
+            dataExpense.push(v.day);
+            labelExpense.push(v.value);
         });
         var chartExpense = new Chart(expense, {
             type: 'line',
@@ -25,7 +25,7 @@
                 labels: dataExpense,
                 datasets: [{
                     label: 'Gastos em Reais',
-                    data: dataExpense,
+                    data: labelExpense,
                     backgroundColor: 'rgba(255, 0, 0, 0.4)',
                 }]
             },
@@ -46,17 +46,17 @@
         var valuesProfit = JSON.parse($('#values_profit').val());
         var dataProfit=[], labelProfit=[];
         valuesProfit.forEach(function (v) {
-            dataProfit.push(v.value);
-            labelProfit.push(v.day);
+            dataProfit.push(v.day);
+            labelProfit.push(v.value);
         });
         var profit = document.getElementById("chart_profits").getContext('2d');
         var chartProfit = new Chart(profit, {
             type: 'bar',
             data: {
-                labels: labelProfit,
+                labels: dataProfit,
                 datasets: [{
                     label: 'Receitas em Reais',
-                    data: dataProfit,
+                    data: labelProfit,
                     backgroundColor: 'rgba(0, 0, 255, 0.4)',
                 }]
             }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCreditCard;
 use App\Models\CreditCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +10,16 @@ use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 
 class CreditCardController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +46,7 @@ class CreditCardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCreditCard $request)
     {
         CreditCard::create([
             'account_id' => $request->account_id,

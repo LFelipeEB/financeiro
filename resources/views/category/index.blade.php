@@ -56,7 +56,7 @@
                                 </tbody>
                             </table>
 
-                            <a href="/expense/create" class="btn btn-primary">Adicionar Categoria</a>
+                            <a href="/category/create" class="btn btn-primary">Adicionar Categoria</a>
                         </div>
                     </div>
                 </div>

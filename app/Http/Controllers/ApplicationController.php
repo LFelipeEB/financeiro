@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreApplication;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +45,7 @@ class ApplicationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreApplication $request)
     {
         Application::create([
             'user_id' => Auth::id(),

@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProfit;
 use App\Models\Profit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProfitController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,16 +45,16 @@ class ProfitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProfit $request)
     {
         Profit::create([
             'category_id' => $request->category_id,
             'account_id' => $request->account_id,
             'user_id' => Auth::id(),
             'value' => $request->value,
-            'receipt' => $request->receipt,
-            'source' => $request->source,
-            'description' => $request->description
+            isset($request->receipt)? "'receipt' => $request->receipt":"",
+            isset($request->source)? "'source' => $request->place":"",
+            isset($request->description)? "'description' => $request->description":"",
         ]);
 
         return redirect('/profit');

@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreExpense;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,16 +45,16 @@ class ExpenseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreExpense $request)
     {
         Expense::create([
             'category_id' => $request->category_id,
             'account_id' => $request->account_id,
             'user_id' => Auth::id(),
             'value' => $request->value,
-            'receipt' => $request->receipt,
-            'place' => $request->place,
-            'description' => $request->description
+            isset($request->receipt)? "'receipt' => $request->receipt":"",
+            isset($request->place)? "'place' => $request->place":"",
+            isset($request->description)? "'description' => $request->description":"",
         ]);
 
         return redirect('/expense');

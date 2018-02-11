@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAccount;
 use App\Models\Account;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,13 +11,23 @@ use Illuminate\Support\Facades\Auth;
 class AccountController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('account.index', compact('accounts'));
+        return view('account.index');
     }
 
     /**
@@ -35,13 +46,13 @@ class AccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAccount $request)
     {
         $account = Account::create([
             'bank_id' => $request->bank_id,
             'category_id' => $request->category_id,
             'user_id' => Auth::id(),
-            'operation' => isset($request->operation)?$request->operation: "",
+            isset($request->operation) ? "'operation' =>  {$request->operation}": '',
             'account' => $request->account,
             'agency' => $request->agency,
         ]);
