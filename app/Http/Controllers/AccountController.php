@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAccount;
 use App\Models\Account;
+use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AccountController extends Controller
 {
@@ -57,6 +59,9 @@ class AccountController extends Controller
             'agency' => $request->agency,
         ]);
 
+        Log::makeLog($account);
+        Session::flash('success', "Conta cadastrada com Sucesso.");
+
         return redirect("/account");
     }
 
@@ -97,8 +102,10 @@ class AccountController extends Controller
         $account->operation = $request->operation;
         $account->account = $request->account;
         $account->agency = $request->agency;
+        Log::makeLog($account, $account->getOriginal());
         $account->save();
 
+        Session::flash('success', "Dados bancarios editado com sucesso.");
         return redirect("/account");
     }
 
@@ -111,6 +118,8 @@ class AccountController extends Controller
     public function destroy(Account $account)
     {
         $account->delete();
+        Log::makeLog($account, $account->getOriginal());
+        Session::flash('success', "Dados bancarios DELETADO com sucesso.");
         return redirect("/account");
     }
 }

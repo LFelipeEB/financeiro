@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExpense;
 use App\Models\Expense;
+use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ExpenseController extends Controller
 {
@@ -47,7 +49,7 @@ class ExpenseController extends Controller
      */
     public function store(StoreExpense $request)
     {
-        Expense::create([
+        $expense = Expense::create([
             'category_id' => $request->category_id,
             'account_id' => $request->account_id,
             'user_id' => Auth::id(),
@@ -56,6 +58,9 @@ class ExpenseController extends Controller
             isset($request->place)? "'place' => $request->place":"",
             isset($request->description)? "'description' => $request->description":"",
         ]);
+
+        Log::makeLog($expense);
+        Session::flash('success', "Dados da despesa SALVO com sucesso.");
 
         return redirect('/expense');
     }
@@ -97,6 +102,10 @@ class ExpenseController extends Controller
         $expense->receipt = $request->receipt;
         $expense->place = $request->place;
         $expense->description =  $request->description;
+
+        Log::makeLog($expense, $expense->getOriginal());
+        Session::flash('success', "Dados da despesa EDITADO com sucesso.");
+
         $expense->save();
 
         return redirect("/expense");
@@ -111,6 +120,8 @@ class ExpenseController extends Controller
     public function destroy(Expense $expense)
     {
         $expense->delete();
+        Log::makeLog($expense, $expense->getOriginal());
+        Session::flash('success', "Dados da despesa DELETADO com sucesso.");
 
         return redirect('/expense');
     }

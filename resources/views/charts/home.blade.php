@@ -67,7 +67,6 @@
         };
 
         var balance_account = JSON.parse($('#values_balance_account').val());
-        console.log(balance_account);
         var dataBalance=[], labelBalance=[], colorBalance=[];
         balance_account.forEach(function (v) {
             labelBalance.push(v.name);
@@ -75,8 +74,6 @@
             colorBalance.push(randomColorGenerator())
         });
 
-        console.log(labelBalance);
-        console.log(dataBalance);
         var balance = document.getElementById("chart_balance_account").getContext('2d');
         var chartBalance = new Chart(balance, {
             type: 'pie',

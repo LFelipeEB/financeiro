@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProfit;
+use App\Models\Log;
 use App\Models\Profit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ProfitController extends Controller
 {
@@ -47,7 +49,7 @@ class ProfitController extends Controller
      */
     public function store(StoreProfit $request)
     {
-        Profit::create([
+        $profit = Profit::create([
             'category_id' => $request->category_id,
             'account_id' => $request->account_id,
             'user_id' => Auth::id(),
@@ -56,6 +58,8 @@ class ProfitController extends Controller
             isset($request->source)? "'source' => $request->place":"",
             isset($request->description)? "'description' => $request->description":"",
         ]);
+        Log::makeLog($profit);
+        Session::flash('success', "Dados da Receita SALVO com sucesso.");
 
         return redirect('/profit');
     }
@@ -97,6 +101,9 @@ class ProfitController extends Controller
         $profit->receipt = $request->receipt;
         $profit->source = $request->source;
         $profit->description = $request->description;
+        Log::makeLog($profit, $profit->getOriginal());
+        Session::flash('success', "Dados da receita EDITADO com sucesso.");
+
         $profit->save();
 
         return redirect("/profit");
@@ -111,6 +118,9 @@ class ProfitController extends Controller
     public function destroy(Profit $profit)
     {
         $profit->delete();
+        Log::makeLog($profit, $profit->getOriginal());
+        Session::flash('success', "Dados da receita DELETADO com sucesso.");
+
         return redirect('/profit');
     }
 }

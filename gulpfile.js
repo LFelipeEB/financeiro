@@ -58,6 +58,9 @@ elixir(function(mix) {
     mix.copy('vendor/bower_components/chart.js/dist/Chart.bundle.min.js', 'public/js/chart.bundle.min.js');
     mix.copy('vendor/bower_components/chart.js/dist/Chart.min.js', 'public/js/chart.min.js');
 
+    //DataTable
+    mix.copy('vendor/bower_components/sweetalert2/dist/sweetalert2.all.js', 'public/js/sweetalert2.all.js');
+
     /**************/
     /* Copy Fonts */
     /**************/

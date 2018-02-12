@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCreditCard;
 use App\Models\CreditCard;
+use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 
 class CreditCardController extends Controller
@@ -48,7 +50,7 @@ class CreditCardController extends Controller
      */
     public function store(StoreCreditCard $request)
     {
-        CreditCard::create([
+        $creditCard = CreditCard::create([
             'account_id' => $request->account_id,
             'user_id' => Auth::id(),
             'good_true' => $request->good_true,
@@ -57,6 +59,9 @@ class CreditCardController extends Controller
             'number' => $request->number,
             'brand' => $request->brand
         ]);
+        Log::makeLog($creditCard);
+        Session::flash('success', "Dados do cartao de credito SALVOS com sucesso.");
+
 
         return redirect('/creditcard');
     }
@@ -104,6 +109,10 @@ class CreditCardController extends Controller
     public function destroy(CreditCard $creditCard)
     {
         $creditCard->delete();
+
+        Log::makeLog($creditCard, $creditCard->getOriginal());
+        Session::flash('success', "Dados do cartao de credito DELETADO com sucesso.");
+
         return redirect('/creditcard');
     }
 }
