@@ -29,6 +29,9 @@ class StoreCreditCard extends FormRequest
             'printed_name' => "required|max:255",
             'number' => "required|max:16|min:16",
             'brand' => "required",
+            'limit' => "required",
+            'maturity' => "required",
+            'closure' => "required",
         ];
     }
 

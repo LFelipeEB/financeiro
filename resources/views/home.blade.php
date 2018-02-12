@@ -16,8 +16,14 @@
                 <div class="count">{{Auth::user()->accounts->count()}}</div>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
-                <span class="count_top"><i class="far fa-credit-card"></i> Total de Cartões de Credito</span>
-                <div class="count">{{Auth::user()->creditCard->count()}}</div>
+                <span class="count_top"><i class="far fa-credit-card"></i>Total de Faturas em Aberto</span>
+                <div class="count">{{
+                DB::table('invoce')
+                ->where('year', '>=', date("Y"))
+                ->where('month', '>=', date("m"))
+                ->sum('value')
+                /100
+                }}</div>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fas fa-chart-line"></i> Total em Aplicações</span>
@@ -26,7 +32,7 @@
             </div>
             <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fas fa-chart-line"></i> SALDO</span>
-                <div class="count">{{(Auth::user()->profits->sum('value')/100) - (Auth::user()->expenses->sum('value')/100)}}</div>
+                <div class="count">{{(Auth::user()->profits->where('date','<=', date("Y-m-d H:i:s"))->sum('value')/100) - (Auth::user()->expenses->where('date','<=', date("Y-m-d H:i:s"))->sum('value')/100)}}</div>
             </div>
         </div>
         <!-- /top tiles -->

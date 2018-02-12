@@ -57,7 +57,10 @@ class CreditCardController extends Controller
             'printed_name' => $request->printed_name,
             'nickname' => $request->nickname,
             'number' => $request->number,
-            'brand' => $request->brand
+            'brand' => $request->brand,
+            'limit' => $request->brand,
+            'maturity' => $request->brand,
+            'closure' => $request->brand,
         ]);
         Log::makeLog($creditCard);
         Session::flash('success', "Dados do cartao de credito SALVOS com sucesso.");

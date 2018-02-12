@@ -71,6 +71,9 @@
 
             $('input[name="date"]').daterangepicker({
                 singleDatePicker: true,
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
             });
         });
     </script>

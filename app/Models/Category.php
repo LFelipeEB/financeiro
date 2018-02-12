@@ -5,7 +5,7 @@ namespace App\Models;
 class Category extends Model
 {
     protected $fillable = [
-      'name'
+        'name'
     ];
 
     public function account(){
@@ -18,5 +18,9 @@ class Category extends Model
 
     public function expenses(){
         return $this->hasMany(Expense::class);
+    }
+
+    public function  invoceCreditCard(){
+        return $this->hasMany(InvoceCreditCard::class);
     }
 }
