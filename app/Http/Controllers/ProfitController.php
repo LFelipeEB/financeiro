@@ -57,6 +57,7 @@ class ProfitController extends Controller
             isset($request->receipt)? "'receipt' => $request->receipt":"",
             isset($request->source)? "'source' => $request->place":"",
             isset($request->description)? "'description' => $request->description":"",
+            isset($request->date)? "'date' => $request->date":"",
         ]);
         Log::makeLog($profit);
         Session::flash('success', "Dados da Receita SALVO com sucesso.");
@@ -101,6 +102,7 @@ class ProfitController extends Controller
         $profit->receipt = $request->receipt;
         $profit->source = $request->source;
         $profit->description = $request->description;
+        $profit->date = $request->date;
         Log::makeLog($profit, $profit->getOriginal());
         Session::flash('success', "Dados da receita EDITADO com sucesso.");
 

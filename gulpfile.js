@@ -35,6 +35,9 @@ elixir(function(mix) {
     //DataTable
     mix.copy('vendor/bower_components/datatables.net-dt/css/jquery.dataTables.min.css', 'public/css/dataTable.min.css');
 
+    //DateRangePicker
+    mix.copy('vendor/bower_components/bootstrap-daterangepicker/daterangepicker.css', 'public/css/daterange.css');
+
     /****************/
     /* Copy Scripts */
     /****************/
@@ -60,6 +63,10 @@ elixir(function(mix) {
 
     //DataTable
     mix.copy('vendor/bower_components/sweetalert2/dist/sweetalert2.all.js', 'public/js/sweetalert2.all.js');
+
+    //DateRangePicker
+    mix.copy('vendor/bower_components/bootstrap-daterangepicker/daterangepicker.js', 'public/js/daterange.js');
+    mix.copy('vendor/bower_components/moment/min/moment.min.js', 'public/js/moment.js');
 
     /**************/
     /* Copy Fonts */

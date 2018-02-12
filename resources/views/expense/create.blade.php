@@ -47,7 +47,8 @@
                             {!! BootForm::number('value', 'Valor', old('value')) !!}
                             {!! BootForm::text('receipt', 'Comprovante', old('receipt')) !!}
                             {!! BootForm::text('place', 'Local do Gasto', old('place')) !!}
-                            {!! BootForm::text('description', 'Descriçao da Receita', old('description')) !!}
+                            {!! BootForm::text('description', 'Descriçao da Despesa', old('description')) !!}
+                            {!! BootForm::text('date', 'Data da Despesa', old('date')) !!}
                             {!! BootForm::submit('Cadastrar Despesa', ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
@@ -61,10 +62,16 @@
     <!-- Select2 -->
     <script src="{{ asset("js/select2.min.js") }}"></script>
     <script src="{{ asset("js/jquery.mask.min.js") }}"></script>
+    <script src="{{ asset("js/moment.js") }}"></script>
+    <script src="{{ asset("js/daterange.js") }}"></script>
 
     <script>
         $(document).ready(function () {
             $(".select2").select2();
+
+            $('input[name="date"]').daterangepicker({
+                singleDatePicker: true,
+            });
         });
     </script>
 
@@ -73,4 +80,6 @@
 @push('stylesheets')
     <!-- Select2 -->
     <link href="{{ asset("css/select2.min.css") }}" rel="stylesheet">
+    <!-- DateRange -->
+    <link href="{{ asset("css/daterange.css") }}" rel="stylesheet">
 @endpush

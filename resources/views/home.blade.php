@@ -45,7 +45,7 @@
                             </ul>
                             <h3>
                                 Despesas X Receitas
-                                <small>Demonstraçao de despesa e Receitas nos ultimos 30 dias.</small>
+                                <small>Demonstraçao de Despesa e Receitas nos ultimos 30 dias.</small>
                             </h3>
                             <div class="clearfix"></div>
                         </div>

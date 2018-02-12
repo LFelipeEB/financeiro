@@ -57,6 +57,7 @@ class ExpenseController extends Controller
             isset($request->receipt)? "'receipt' => $request->receipt":"",
             isset($request->place)? "'place' => $request->place":"",
             isset($request->description)? "'description' => $request->description":"",
+            isset($request->date)? "'date' => $request->date":"",
         ]);
 
         Log::makeLog($expense);
@@ -102,6 +103,7 @@ class ExpenseController extends Controller
         $expense->receipt = $request->receipt;
         $expense->place = $request->place;
         $expense->description =  $request->description;
+        $expense->date =  $request->date;
 
         Log::makeLog($expense, $expense->getOriginal());
         Session::flash('success', "Dados da despesa EDITADO com sucesso.");
