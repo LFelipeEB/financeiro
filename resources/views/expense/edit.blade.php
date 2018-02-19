@@ -70,11 +70,21 @@
     <!-- Select2 -->
     <script src="{{ asset("js/select2.min.js") }}"></script>
     <script src="{{ asset("js/jquery.mask.min.js") }}"></script>
+    <!-- DateRange -->
+    <script src="{{ asset("js/moment.js") }}"></script>
+    <script src="{{ asset("js/daterange.js") }}"></script>
 
     <script>
         $(document).ready(function () {
             $(".select2").select2({
                 placeholder: 'Selecione seu Banco'
+            });
+
+            $('input[name="date"]').daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
             });
         });
     </script>
@@ -84,4 +94,6 @@
 @push('stylesheets')
     <!-- Select2 -->
     <link href="{{ asset("css/select2.min.css") }}" rel="stylesheet">
+    <!-- DateRange -->
+    <link href="{{ asset("css/daterange.css") }}" rel="stylesheet">
 @endpush

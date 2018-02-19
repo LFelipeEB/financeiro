@@ -2,13 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAccount;
 use App\Models\Account;
+use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AccountController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +29,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return view('account.index', compact('accounts'));
+        return view('account.index');
     }
 
     /**
@@ -35,16 +48,19 @@ class AccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAccount $request)
     {
         $account = Account::create([
             'bank_id' => $request->bank_id,
             'category_id' => $request->category_id,
             'user_id' => Auth::id(),
-            'operation' => isset($request->operation)?$request->operation: "",
+            isset($request->operation) ? "'operation' =>  {$request->operation}": '',
             'account' => $request->account,
             'agency' => $request->agency,
         ]);
+
+        Log::makeLog($account);
+        Session::flash('success', "Conta cadastrada com Sucesso.");
 
         return redirect("/account");
     }
@@ -86,8 +102,10 @@ class AccountController extends Controller
         $account->operation = $request->operation;
         $account->account = $request->account;
         $account->agency = $request->agency;
+        Log::makeLog($account, $account->getOriginal());
         $account->save();
 
+        Session::flash('success', "Dados bancarios editado com sucesso.");
         return redirect("/account");
     }
 
@@ -100,6 +118,8 @@ class AccountController extends Controller
     public function destroy(Account $account)
     {
         $account->delete();
+        Log::makeLog($account, $account->getOriginal());
+        Session::flash('success', "Dados bancarios DELETADO com sucesso.");
         return redirect("/account");
     }
 }

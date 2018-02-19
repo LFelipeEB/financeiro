@@ -26,3 +26,5 @@ include_once 'application/web.php';
 include_once 'profit/web.php';
 include_once 'expense/web.php';
 include_once 'category/web.php';
+include_once 'invoce_credit_card/web.php';
+include_once 'invoce_credit_card/api.php';

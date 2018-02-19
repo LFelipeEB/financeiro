@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreApplication;
 use App\Models\Application;
+use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ApplicationController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,15 +47,17 @@ class ApplicationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreApplication $request)
     {
-        Application::create([
+        $application = Application::create([
             'user_id' => Auth::id(),
             'value' => $request->value,
             'expected' => $request->expected,
             'type' => $request->type,
             'description' => $request->description,
         ]);
+        Log::makeLog($application);
+        Session::flash('success', "Dados da aplicaçao SALVO com sucesso.");
 
         return redirect("/application");
     }
@@ -82,6 +97,9 @@ class ApplicationController extends Controller
         $application->expected = $request->expected;
         $application->type = $request->type;
         $application->description = $request->description;
+        Log::makeLog($application, $application->getOriginal());
+        Session::flash('success', "Dados da aplicaçao EDITADOS com sucesso.");
+
         $application->save();
         return redirect('/application');
     }
@@ -95,6 +113,9 @@ class ApplicationController extends Controller
     public function destroy(Application $application)
     {
         $application->delete();
+        Log::makeLog($application);
+        Session::flash('success', "Dados da aplicaçao DELETADOS com sucesso.");
+
         return redirect('/application');
     }
 }

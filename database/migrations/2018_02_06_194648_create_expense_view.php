@@ -15,11 +15,12 @@ class CreateExpenseView extends Migration
     {
         DB::statement("
             create view expense30days as
-              SELECT (expenses.value / 100) AS value,
+              SELECT SUM( (expenses.value/100) ) AS value,
                 date_part('DAY'::text, expenses.created_at) AS day,
                 expenses.user_id AS user_id
                FROM expenses
-              WHERE (expenses.created_at >= (CURRENT_DATE - '30 days'::interval day));
+              WHERE (expenses.created_at >= (CURRENT_DATE - '30 days'::interval day))
+              GROUP BY user_id, day;
         ");
     }
 
@@ -30,6 +31,6 @@ class CreateExpenseView extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('expense30days');
     }
 }

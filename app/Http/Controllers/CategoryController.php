@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,9 +46,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create([
+        $category = Category::create([
            'name' => $request->name,
         ]);
+        Log::makeLog($category);
+        Session::flash('success', "Dados da categoria SALVO com sucesso.");
+
 
         return redirect('/category');
     }

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class CreditCard extends Model
 {
     protected $fillable = [
-        'account_id', 'user_id', 'good_true', 'printed_name', 'nickname', 'brand', 'number'
+        'account_id', 'user_id', 'good_true', 'printed_name', 'nickname', 'brand', 'number',
+        'limit', 'maturity', 'closure'
     ];
     public function account(){
         return $this->belongsTo(Account::class);
@@ -16,5 +17,9 @@ class CreditCard extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function  invoceCreditCard(){
+        return $this->hasMany(InvoceCreditCard::class);
     }
 }

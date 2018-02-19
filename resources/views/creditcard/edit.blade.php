@@ -46,6 +46,9 @@
                             {!! BootForm::text('printed_name', 'Nome no cartao', $creditCard->printed_name) !!}
                             {!! BootForm::number('number', 'Numero do Cartao', $creditCard->number) !!}
                             {!! BootForm::text('brand', 'Bandeira', $creditCard->brand) !!}
+                            {!! BootForm::number('limit', 'Limite disponivel no cartao', $creditCard->limit) !!}
+                            {!! BootForm::number('maturity', 'Data de Vencimento da Fatura', $creditCardmaturity) !!}
+                            {!! BootForm::number('closure', 'Data de Fechamento da Fatura', $creditCard->closure) !!}
                             {!! BootForm::submit('Cadastrar Cartao de Credito', ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>

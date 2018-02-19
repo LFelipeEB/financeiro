@@ -21,7 +21,7 @@ class CreateExpensesTable extends Migration
             $table->integer('value');
             $table->string('receipt')->nullable();
             $table->string('place')->nullable();
-            $table->text('descripton')->nullable();
+            $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
