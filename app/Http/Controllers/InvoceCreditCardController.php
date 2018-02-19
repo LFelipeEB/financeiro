@@ -7,6 +7,8 @@ use App\Models\InvoceCreditCard;
 use App\Models\Log;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class InvoceCreditCardController extends Controller
@@ -107,4 +109,32 @@ class InvoceCreditCardController extends Controller
         Log::makeLog($invoceCreditCard, $invoceCreditCard->getOriginal());
         return redirect('/invocecreditcard');
     }
+
+    public function getApiInvoces(CreditCard $creditCard, $month, $year){
+        $invoce  = InvoceCreditCard::
+        whereBetween('date_buy', [
+            Carbon::create($year, $month-1, $creditCard->closure-1)->toDateString(),
+            Carbon::create($year, $month, $creditCard->closure-1)->toDateString(),
+        ])
+            ->get();
+
+        return [
+            'invoce' => $invoce,
+            'value' => $invoce->sum('value'),
+            'credit_card' => $creditCard,
+        ];
+    }
+
+    public function getApiBalanceInvoceOpened(){
+        $balance=[];
+        foreach (Auth::user()->creditCard as $creditCard){
+            $balance = InvoceCreditCard::
+            where('date_buy', '>',
+                Carbon::create(date('Y'), date('m'),$creditCard->clousure)->toDateString()
+            )->sum('value');
+        }
+
+        return $balance;
+    }
+
 }

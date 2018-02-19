@@ -9,7 +9,7 @@ class CreditCard extends Model
 {
     protected $fillable = [
         'account_id', 'user_id', 'good_true', 'printed_name', 'nickname', 'brand', 'number',
-        'limit', 'maturity', 'clousure'
+        'limit', 'maturity', 'closure'
     ];
     public function account(){
         return $this->belongsTo(Account::class);

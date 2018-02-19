@@ -48,6 +48,9 @@ class StoreCreditCard extends FormRequest
             'number.max' => "O cartao tem exatamente 16 numero. Verifique o numero digitado.",
             'number.min' => "O cartao tem exatamente 16 numero. Verifique o numero digitado.",
             'brand.required' => "Digite a Bandeira do seu cartao. Este campo e obrigatorio",
+            'limit.required' => "Digite o limite do seu cartao. Este campo e obrigatorio",
+            'maturity.required' => "Digite a Data de VENCIMENTO do seu cartao. Este campo e obrigatorio",
+            'closure.required' => "Digite a Data de FECHAMENTO DA FATURA do seu cartao. Este campo e obrigatorio",
         ];
     }
 }

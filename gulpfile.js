@@ -48,8 +48,11 @@ elixir(function(mix) {
     // jQuery
     mix.copy('vendor/bower_components/gentelella/vendors/jquery/dist/jquery.min.js', 'public/js/jquery.min.js');
 
+    // jQuery
+    mix.copy('vendor/bower_components/popper.js/dist/poper.min.js', 'public/js/jquery.min.js');
+
     // Gentelella
-    mix.copy('vendor/bower_components/gentelella/build/js/custom.min.js', 'public/js/gentelella.min.js');
+    mix.copy('vendor/bower_components/gentelella/build/js/custom.min.js', 'public/js/popper.min.js');
 
     //Select2
     mix.copy('vendor/bower_components/select2/dist/js/select2.min.js', 'public/js/select2.min.js');

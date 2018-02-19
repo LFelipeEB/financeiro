@@ -12,18 +12,12 @@
         <!-- top tiles -->
         <div class="row tile_count">
             <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
-                <span class="count_top"><i class="fas fa-address-card"></i> Total de Contas</span>
-                <div class="count">{{Auth::user()->accounts->count()}}</div>
+                <span class="count_top"><i class="fas fa-address-card"></i> Saldo em Contas</span>
+                <div class="count" id="balance">{{(Auth::user()->profits->where('date','<=', date("Y-m-d H:i:s"))->sum('value')/100) - (Auth::user()->expenses->where('date','<=', date("Y-m-d H:i:s"))->sum('value')/100)}}</div>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="far fa-credit-card"></i>Total de Faturas em Aberto</span>
-                <div class="count">{{
-                DB::table('invoce')
-                ->where('year', '>=', date("Y"))
-                ->where('month', '>=', date("m"))
-                ->sum('value')
-                /100
-                }}</div>
+                <div class="count" id="openedInvoce"></div>
             </div>
             <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fas fa-chart-line"></i> Total em Aplicações</span>
@@ -32,7 +26,7 @@
             </div>
             <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fas fa-chart-line"></i> SALDO</span>
-                <div class="count">{{(Auth::user()->profits->where('date','<=', date("Y-m-d H:i:s"))->sum('value')/100) - (Auth::user()->expenses->where('date','<=', date("Y-m-d H:i:s"))->sum('value')/100)}}</div>
+                <div class="count" id="realBalance"></div>
             </div>
         </div>
         <!-- /top tiles -->
@@ -93,3 +87,15 @@
     @include('charts.home')
 
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $.getJSON("api/invocecreditcard/balanceinvoce", function (data) {
+           $("#openedInvoce").append(data/100);
+           realBalance = parseFloat(document.getElementById('balance').textContent - (data/100));
+           $("#realBalance").append(realBalance.toFixed(2));
+        });
+    });
+</script>
+@endpush

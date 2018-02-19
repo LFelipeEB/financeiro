@@ -30,39 +30,37 @@
                                 <h3>{{$expenses[0]->creditCard->nickname}}</h3>
 
                                 <ul class="list-unstyled">
-                                    <li>
+                                    <li id="printed_name">
                                         <i class="fas fa-user user-profile-icon"></i>
-                                        {{$expenses[0]->creditCard->printed_name}}
                                     </li>
 
-                                    <li>
-                                        <i class="fas fa-credit-card user-profile-icon"></i>{{$expenses[0]->creditCard->number}}
+                                    <li id="number">
+                                        <i class="fas fa-credit-card user-profile-icon"></i>
                                     </li>
 
-                                    <li class="m-top-xs">
+                                    <li class="m-top-xs" id="maturity">
                                         <i class="fas fa-calendar-alt "></i>
-                                        Vencimento da Fatura: Dia {{$expenses[0]->creditCard->maturity}}
+                                        Vencimento da Fatura: Dia
                                     </li>
                                 </ul>
                                 <br />
                             </div>
                             <div class="col-md-6 col-xs-6">
-                                <h3>Valor da Fatura: {{$expenses->sum('value')/100}}</h3>
+                                <h3 id="value">Valor da Fatura: </h3>
 
                                 <ul class="list-unstyled">
-                                    <li>
+                                    <li id="limit">
                                         <i class="fas fa-arrow-up user-profile-icon"></i>
-                                        {{$expenses[0]->creditCard->limit/100}}
                                     </li>
 
-                                    <li>
+                                    <li id="month">
                                         <i class="fas fa-calendar user-profile-icon"></i>
-                                        Mes: {{$month}}
+                                        Mes:
                                     </li>
 
-                                    <li class="m-top-xs">
+                                    <li class="m-top-xs" id="year">
                                         <i class="fas fa-calendar-check "></i>
-                                        Ano: {{$year}}
+                                        Ano:
                                     </li>
                                 </ul>
                                 <br />
@@ -93,23 +91,13 @@
                             <table class="table dataTable">
                                 <thead>
                                 <tr>
-                                    <th>Categoria</th>
                                     <th>Data</th>
                                     <th>Parcelas</th>
                                     <th>Local da Compra</th>
                                     <th>Valor</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach($expenses as $invoce)
-                                    <tr>
-                                        <td>{{$invoce->category->name}}</td>
-                                        <td>{{$invoce->date_buy}}</td>
-                                        <td>{{$invoce->plots}}</td>
-                                        <td>{{$invoce->place}}</td>
-                                        <td>{{$invoce->value/100}}</td>
-                                    </tr>
-                                @endforeach
+                                <tbody id="tBodyInvoce">
                                 </tbody>
                             </table>
 
@@ -128,7 +116,23 @@
     <script src="{{ asset("js/dataTable.min.js") }}"></script>
     <script>
         $(document).ready(function(){
-            $('.dataTable').DataTable();
+            url = window.location.pathname.split('/');
+            $.getJSON("/api/invocecreditcard/invoce/"+url[2]+"/"+url[3]+"/"+url[4], function (data) {
+                $("#printed_name").append(data.credit_card.printed_name);
+                $("#number").append(data.credit_card.number);
+                $("#maturity").append(data.credit_card.maturity);
+                $("#value").append(data.value/100);
+                $("#limit").append(data.credit_card.limit/100);
+                $("#month").append(url[3]);
+                $("#year").append(url[4]);
+
+                data.invoce.forEach(function (a) {
+                    append = "<tr><td>"+a.date_buy+"</td><td>"+a.plots+"</td><td>"+a.place+"</td><td>"+(a.value/100)+"</td>";
+                    $("#tBodyInvoce").append(append);
+                });
+
+                $('.dataTable').DataTable();
+            });
         });
     </script>
 
