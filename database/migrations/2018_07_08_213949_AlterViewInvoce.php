@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvoceView extends Migration
+class AlterViewInvoce extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class CreateInvoceView extends Migration
     public function up()
     {
         DB::statement("
-        CREATE VIEW invoce AS
-          SELECT c.id, nickname, sum(value) as value, date_part('month', date_buy) as month, date_part('year', date_buy) as year
+        CREATE OR REPLACE VIEW invoce AS
+          SELECT c.id, nickname, sum(value) as value, date_part('month', date_buy) as month, date_part('year', date_buy) as year, c.user_id
           FROM
             invoce_credit_cards AS i JOIN credit_cards AS c ON i.credit_card_id = c.id
           GROUP BY
@@ -31,7 +31,12 @@ class CreateInvoceView extends Migration
     public function down()
     {
         DB::statement("
-            DROP VIEW invoce;
+        CREATE OR REPLACE VIEW invoce AS
+          SELECT c.id, nickname, sum(value) as value, date_part('month', date_buy) as month, date_part('year', date_buy) as year
+          FROM
+            invoce_credit_cards AS i JOIN credit_cards AS c ON i.credit_card_id = c.id
+          GROUP BY
+            month, year, nickname, c.id
         ");
     }
 }

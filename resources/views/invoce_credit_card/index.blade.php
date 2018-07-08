@@ -39,7 +39,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(DB::table('invoce')->get() as $invoce)
+                                @foreach(DB::table('invoce')->where('user_id', \Auth::id())->get() as $invoce)
                                     <tr>
                                         <td>{{$invoce->nickname}}</td>
                                         <td>{{$invoce->month}}</td>
