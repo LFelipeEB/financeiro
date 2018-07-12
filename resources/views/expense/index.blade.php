@@ -37,7 +37,7 @@
                                     <th>Recibo</th>
                                     <th>Local</th>
                                     <th>Descriçao</th>
-                                    <th>Criação</th>
+                                    <th>Data</th>
                                     <th>Açoes</th>
                                 </tr>
                                 </thead>
@@ -50,7 +50,7 @@
                                         <td>{{$expense->receipt}}</td>
                                         <td>{{$expense->source}}</td>
                                         <td>{{$expense->description}}</td>
-                                        <td>{{$expense->created_at->toFormattedDateString()}}</td>
+                                        <td>{{$expense->date_operation->toFormattedDateString()}}</td>
                                         <td>
                                             <div class="row">
                                                 <a href="/expense/{{$expense->id}}/edit">

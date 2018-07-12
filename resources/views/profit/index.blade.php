@@ -38,7 +38,7 @@
                                     <th>Recibo</th>
                                     <th>Fonte</th>
                                     <th>Descriçao</th>
-                                    <th>Criação</th>
+                                    <th>Data</th>
                                     <th>Açoes</th>
                                 </tr>
                                 </thead>
@@ -51,7 +51,7 @@
                                         <td>{{$profit->receipt}}</td>
                                         <td>{{$profit->source}}</td>
                                         <td>{{$profit->description}}</td>
-                                        <td>{{$profit->created_at->toFormattedDateString()}}</td>
+                                        <td>{{$profit->date_operation->toFormattedDateString()}}</td>
                                         <td>
                                             <div class="row">
                                                 <a href="/profit/{{$profit->id}}/edit">

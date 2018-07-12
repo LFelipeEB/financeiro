@@ -54,10 +54,10 @@ class ExpenseController extends Controller
             'account_id' => $request->account_id,
             'user_id' => Auth::id(),
             'value' => $request->value,
-            isset($request->receipt)? "'receipt' => $request->receipt":"",
-            isset($request->place)? "'place' => $request->place":"",
-            isset($request->description)? "'description' => $request->description":"",
-            isset($request->date)? "'date' => $request->date":"",
+            'receipt' => $request->receipt,
+            'place' => $request->place,
+            'description' => $request->description,
+            'date_operation' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->date),
         ]);
 
         Log::makeLog($expense);
@@ -103,7 +103,7 @@ class ExpenseController extends Controller
         $expense->receipt = $request->receipt;
         $expense->place = $request->place;
         $expense->description =  $request->description;
-        $expense->date =  $request->date;
+        $expense->date_operation =  $request->date;
 
         Log::makeLog($expense, $expense->getOriginal());
         Session::flash('success', "Dados da despesa EDITADO com sucesso.");

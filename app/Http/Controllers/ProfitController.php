@@ -54,10 +54,10 @@ class ProfitController extends Controller
             'account_id' => $request->account_id,
             'user_id' => Auth::id(),
             'value' => $request->value,
-            isset($request->receipt)? "'receipt' => $request->receipt":"",
-            isset($request->source)? "'source' => $request->place":"",
-            isset($request->description)? "'description' => $request->description":"",
-            'date' => $request->date,
+            'receipt' => $request->receipt,
+            'source' => $request->place,
+            'description' => $request->description,
+            'date_operation' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->date),
         ]);
         Log::makeLog($profit);
         Session::flash('success', "Dados da Receita SALVO com sucesso.");
@@ -102,7 +102,7 @@ class ProfitController extends Controller
         $profit->receipt = $request->receipt;
         $profit->source = $request->source;
         $profit->description = $request->description;
-        $profit->date = $request->date;
+        $profit->date_operation = $request->date;
         Log::makeLog($profit, $profit->getOriginal());
         Session::flash('success', "Dados da receita EDITADO com sucesso.");
 

@@ -40,7 +40,7 @@
 <!-- jQuery -->
 <script src="{{ asset("js/jquery.min.js") }}"></script>
 <!-- Popper.JS -->
-<script src="{{ asset("js/popper.min.js") }}"></script>
+<script src="https://unpkg.com/popper.js"></script>
 <!-- Bootstrap -->
 <script src="{{ asset("js/bootstrap.min.js") }}"></script>
 <!-- Custom Theme Scripts -->
