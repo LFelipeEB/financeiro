@@ -130,7 +130,7 @@ class InvoceCreditCardController extends Controller
         foreach (Auth::user()->creditCard as $creditCard){
             $balance = InvoceCreditCard::
             where('date_buy', '>',
-                Carbon::create(date('Y'), date('m'),$creditCard->clousure)->toDateString()
+                Carbon::create(date('Y'), date('m')-1,$creditCard->clousure)->toDateString()
             )->sum('value');
         }
 

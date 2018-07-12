@@ -24,6 +24,7 @@ class CreateBalanceAccountView extends Migration
                 sum((COALESCE(p.value, (0)::bigint) - COALESCE(e.value, (0)::bigint))) AS value
                FROM (expense_account e
                  RIGHT JOIN profit_account p ON ((e.id = p.id)))
+               WHERE p.deleted_at = null AND e.deted_at = null
               GROUP BY p.id, p.category_id, p.account, p.agency, p.name, p.user_id;
         ");
     }

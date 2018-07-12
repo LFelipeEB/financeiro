@@ -42,7 +42,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(Auth::user()->expenses as $expense)
+                                @foreach(Auth::user()->expenses->sortByDesc('date_operation') as $expense)
                                     <tr>
                                         <td>{{$expense->category->name}}</td>
                                         <td>AG: {{$expense->account->agency}} | CC: {{$expense->account->account}}</td>
@@ -83,7 +83,9 @@
     <script src="{{ asset("js/dataTable.min.js") }}"></script>
     <script>
         $(document).ready(function(){
-            $('.dataTable').DataTable();
+            $('.dataTable').DataTable({
+                "bSort": false
+            });
         });
     </script>
 

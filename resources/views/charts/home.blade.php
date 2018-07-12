@@ -1,5 +1,5 @@
 @php
-    $expense30days = DB::table('expense30days')->where('user_id', Auth::id())->get();
+    $expense30days = DB::table('expense30days')->where('user_id', Auth::id())->orderByDesc('day')->get();
 @endphp
 <input id="values_expense" value="{{$expense30days}}" type="hidden">
 
