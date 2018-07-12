@@ -44,6 +44,7 @@
                             <li><a href="/profit">Receitas</a></li>
                             <li><a href="/expense/">Despesas</a></li>
                             <li><a href="/invocecreditcard/">Faturas de Cartao de Credito</a></li>
+                            <li><a href="/account/transfer">Transferir Valores entre Contas</a></li>
                         </ul>
                     </li>
                     <li>

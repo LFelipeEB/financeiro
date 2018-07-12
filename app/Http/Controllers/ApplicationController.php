@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApplication;
 use App\Models\Application;
+use App\Models\Expense;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,17 @@ class ApplicationController extends Controller
             'description' => $request->description,
         ]);
         Log::makeLog($application);
+
+        if($request->account_id != 0) {
+            $expense = Expense::create([
+                'category_id' => 4,
+                'account_id' => $request->account_id,
+                'user_id' => Auth::id(),
+                'value' => $request->value,
+                'description' => $request->description,
+                'date_operation' => \Carbon\Carbon::now(),
+            ]);
+        }
         Session::flash('success', "Dados da aplicaçao SALVO com sucesso.");
 
         return redirect("/application");

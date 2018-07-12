@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAccount;
+use App\Http\Requests\TransferStoreRequest;
 use App\Models\Account;
+use App\Models\Expense;
 use App\Models\Log;
+use App\Models\Profit;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -121,5 +124,41 @@ class AccountController extends Controller
         Log::makeLog($account, $account->getOriginal());
         Session::flash('success', "Dados bancarios DELETADO com sucesso.");
         return redirect("/account");
+    }
+
+    public function transferStore(TransferStoreRequest $request)
+    {
+        $from = Account::find($request->orig_account);
+        $to = Account::find($request->dest_account);
+
+        $expense = Expense::create([
+            'category_id' => 29,
+            'account_id' => $request->orig_account,
+            'user_id' => Auth::id(),
+            'value' => $request->value,
+            'description' => "Transferencia de Valores entre Ag:{$from->agency} | CC:{$from->account} para Ag:{$to->agency} | CC:{$to->account}",
+            'date_operation' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->date),
+        ]);
+        Log::makeLog($expense);
+
+        $profit = Profit::create([
+            'category_id' => 29,
+            'account_id' => $request->dest_account,
+            'user_id' => Auth::id(),
+            'value' => $request->value,
+            'receipt' => '',
+            'source' => "Ag:{$from->agency} | CC:{$from->account}",
+            'description' => "Transferencia de Valores entre Ag:{$from->agency} | CC:{$from->account} para Ag:{$to->agency} | CC:{$to->account}",
+            'date_operation' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->date),
+        ]);
+
+        Log::makeLog($profit);
+        Session::flash('success', "Transferencia de Valores cadastrada com sucesso.");
+        return redirect('/');
+    }
+
+    public function transfer()
+    {
+        return view('account.transfer');
     }
 }

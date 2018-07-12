@@ -34,6 +34,13 @@
                             {!! BootForm::number('expected', 'Rendimento Esperado', old('expected')) !!}
                             {!! BootForm::text('type', 'Tipo de Aplicaçao', old('type')) !!}
                             {!! BootForm::text('description', 'Descriçao', old('description')) !!}
+                            <label for="account_id" class="control-label">Conta</label>
+                            <select id="account_id" name="account_id" class="select2" style="width: 100%" data-placeholder="Selecione a conta para debito do Investimento">
+                                <option value="0">Sem Conta para debito.</option>
+                            @foreach(Auth::user()->accounts as $account)
+                                    <option value="{{$account->id}}">Ag: {{$account->agency}} | CC: {{$account->account}}</option>
+                                @endforeach
+                            </select>
                             {!! BootForm::submit('Cadastrar Aplicaçao', ['class' => 'btn btn-primary']) !!}
 
 
@@ -44,3 +51,20 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <!-- Select2 -->
+    <script src="{{ asset("js/select2.min.js") }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".select2").select2();
+        });
+    </script>
+
+@endpush
+
+@push('stylesheets')
+    <!-- Select2 -->
+    <link href="{{ asset("css/select2.min.css") }}" rel="stylesheet">
+@endpush
