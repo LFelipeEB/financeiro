@@ -13,9 +13,6 @@ class AlterViewExpense30Days extends Migration
      */
     public function up()
     {
-        Schema::table('expenses', function (Blueprint $table) {
-            $table->date('date_operation')->change();
-        });
         DB::statement("
             CREATE OR REPLACE view expense30days as
               SELECT SUM( (expenses.value/100) ) AS value,

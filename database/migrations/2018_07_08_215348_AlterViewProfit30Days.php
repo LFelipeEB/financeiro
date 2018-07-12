@@ -13,10 +13,6 @@ class AlterViewProfit30Days extends Migration
      */
     public function up()
     {
-        Schema::table('profits', function (Blueprint $table) {
-            $table->date('date_operation')->change();
-        });
-
         DB::statement("
             CREATE OR REPLACE view profit30days as
               SELECT SUM( (profits.value/100) ) AS value,

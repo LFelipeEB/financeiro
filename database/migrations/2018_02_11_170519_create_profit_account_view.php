@@ -25,7 +25,7 @@ class CreateProfitAccountView extends Migration
               FROM ((accounts a
                  JOIN profits p ON ((a.id = p.account_id)))
                  JOIN banks b ON ((a.bank_id = b.id)))
-              WHERE p.date < now() or p.date ISNULL
+              WHERE p.date_operation < now() or p.date_operation ISNULL
               GROUP BY a.id, a.category_id, b.name;
         ");
     }

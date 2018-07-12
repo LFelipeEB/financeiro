@@ -14,7 +14,7 @@ class AddDateToProfit extends Migration
     public function up()
     {
         Schema::table('profits', function (Blueprint $table){
-            $table->date('date')->nullable();
+            $table->date('date_operation')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddDateToProfit extends Migration
     public function down()
     {
         Schema::table('profits', function($table) {
-            $table->dropColumn('date');
+            $table->dropColumn('date_operation');
         });
     }
 }

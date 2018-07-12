@@ -17,7 +17,7 @@ class CreateExpenseAccountView extends Migration
             CREATE VIEW expense_account AS
               SELECT a.id, a.category_id, SUM(e.value) AS value
               FROM accounts AS a JOIN expenses AS e on a.id = e.account_id
-              WHERE e.date < now() or e.date ISNULL
+              WHERE e.date_operation < now() or e.date_operation ISNULL
               GROUP BY a.id, a.category_id;
         ");
     }

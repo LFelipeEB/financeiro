@@ -14,7 +14,7 @@ class AddDateToExpenses extends Migration
     public function up()
     {
         Schema::table('expenses', function (Blueprint $table){
-           $table->date('date')->nullable();
+           $table->date('date_operation')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddDateToExpenses extends Migration
     public function down()
     {
         Schema::table('expenses', function($table) {
-            $table->dropColumn('date');
+            $table->dropColumn('date_operation');
         });
     }
 }
